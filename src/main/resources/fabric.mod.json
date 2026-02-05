@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "rhapsody",
+  "version": "${version}",
+  "name": "Rhapsody",
+  "description": "\"A picture paints a thousand words. Let's ruin our canvas together.\"",
+  "authors": [
+    "Chemthunder"
+  ],
+  "contributors": [
+    "KindlingCinder - Assets"
+  ],
+  "license": "CC0-1.0",
+  "icon": "assets/rhapsody/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.chemthunder.rhapsody.impl.Rhapsody"
+    ],
+    "fabric-datagen": [
+      "net.chemthunder.rhapsody.data.RhapsodyDataGenerator"
+    ],
+    "cardinal-components": [
+      "net.chemthunder.rhapsody.impl.cca.RhapsodyComponents"
+    ]
+  },
+  "mixins": [
+    "rhapsody.mixins.json"
+  ],
+  "custom": {
+    "cardinal-components": [
+      "rhapsody:flash"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "minecraft": "~1.21.5",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "item.hyacinth_execute": {
+    "subtitle": "sounds.hyacinth.hyacinth_execute",
+    "sounds": [
+      "rhapsody:item/hyacinth_execute"
+    ]
+  }
+}

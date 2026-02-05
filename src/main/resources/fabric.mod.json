@@ -17,6 +17,9 @@
     "main": [
       "net.chemthunder.rhapsody.impl.Rhapsody"
     ],
+    "client": [
+      "net.chemthunder.rhapsody.impl.RhapsodyClient"
+    ],
     "fabric-datagen": [
       "net.chemthunder.rhapsody.data.RhapsodyDataGenerator"
     ],

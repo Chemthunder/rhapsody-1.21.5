@@ -1,9 +1,10 @@
 package net.chemthunder.rhapsody.impl;
 
+import net.chemthunder.rhapsody.impl.index.RhapsodyDataComponents;
 import net.chemthunder.rhapsody.impl.index.RhapsodyItems;
+import net.chemthunder.rhapsody.impl.index.RhapsodyParticles;
 import net.chemthunder.rhapsody.impl.index.RhapsodySounds;
 import net.fabricmc.api.ModInitializer;
-
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,8 @@ public class Rhapsody implements ModInitializer {
 	public void onInitialize() {
         RhapsodyItems.init();
         RhapsodySounds.init();
+        RhapsodyDataComponents.init();
+        RhapsodyParticles.init();
 
 		LOGGER.info("Hello Fabric world!");
 	}

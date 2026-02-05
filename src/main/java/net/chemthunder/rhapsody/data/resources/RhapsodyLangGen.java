@@ -9,7 +9,7 @@ import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
 
-import static net.chemthunder.rhapsody.impl.index.RhapsodyItems.*;
+import static net.chemthunder.rhapsody.impl.index.RhapsodyItems.HYACINTH;
 
 public class RhapsodyLangGen extends FabricLanguageProvider {
     public RhapsodyLangGen(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
@@ -23,10 +23,13 @@ public class RhapsodyLangGen extends FabricLanguageProvider {
         // dmg
         registerDamageType(translationBuilder,
                 RhapsodyDamageTypes.EMBRACE,
-                "%1$s's heart was returned from whence it came",
-                "%1$s's heart was returned from whence it came",
-                "%1$s's heart was returned from whence it came"
+                "%1$s's soul was condemned",
+                "%1$s's soul was condemned",
+                "%1$s's soul was condemned"
         );
+
+        // misc
+        translationBuilder.add("lore.hyacinth", "The God Butcher.");
     }
 
     public void registerDamageType(TranslationBuilder builder, RegistryKey<DamageType> registryKey, String normal, String item, String player) {

@@ -13,6 +13,7 @@ public interface RhapsodySounds {
     Map<SoundEvent, Identifier> SOUNDS = new LinkedHashMap<>();
 
     SoundEvent HYACINTH_EXECUTE = create("item.hyacinth_execute");
+    SoundEvent HYACINTH_SLASH = create("item.hyacinth_slash");
 
     private static SoundEvent create(String name) {
         SoundEvent soundEvent = SoundEvent.of(Rhapsody.id(name));

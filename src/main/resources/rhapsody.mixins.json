@@ -3,6 +3,7 @@
   "package": "net.chemthunder.rhapsody.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "LivingEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -12,6 +13,7 @@
   },
   "client": [
     "client.InGameHudMixin",
+    "client.PlayerEntityRendererMixin",
     "nitrogen.DrawContextAccessor",
     "nitrogen.HandledScreenMixin"
   ]

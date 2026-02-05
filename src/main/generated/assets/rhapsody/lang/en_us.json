@@ -1,6 +1,7 @@
 {
-  "death.attack.embrace": "%1$s's heart was returned from whence it came",
-  "death.attack.embrace.item": "%1$s's heart was returned from whence it came",
-  "death.attack.embrace.player": "%1$s's heart was returned from whence it came",
-  "item.rhapsody.hyacinth": "Hyacinth"
+  "death.attack.embrace": "%1$s's soul was condemned",
+  "death.attack.embrace.item": "%1$s's soul was condemned",
+  "death.attack.embrace.player": "%1$s's soul was condemned",
+  "item.rhapsody.hyacinth": "Hyacinth",
+  "lore.hyacinth": "The God Butcher."
 }

@@ -4,5 +4,12 @@
     "sounds": [
       "rhapsody:item/hyacinth_execute"
     ]
+  },
+
+  "item.hyacinth_slash": {
+    "subtitle": "sounds.hyacinth.hyacinth_slash",
+    "sounds": [
+      "rhapsody:item/hyacinth_slash"
+    ]
   }
 }

@@ -1,0 +1,31 @@
+{
+  "model": {
+    "type": "select",
+    "cases": [
+      {
+        "model": {
+          "type": "model",
+          "model": "rhapsody:item/hyacinth"
+        },
+        "when": [
+          "gui",
+          "ground",
+          "fixed"
+        ]
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:condition",
+      "property": "minecraft:using_item",
+      "on_true": {
+        "type": "minecraft:model",
+        "model": "rhapsody:item/hyacinth_blocking"
+      },
+      "on_false": {
+        "type": "minecraft:model",
+        "model": "rhapsody:item/hyacinth_handheld"
+      }
+    },
+    "property": "display_context"
+  }
+}

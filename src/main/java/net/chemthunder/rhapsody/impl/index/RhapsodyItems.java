@@ -7,7 +7,6 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Items;
-import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 

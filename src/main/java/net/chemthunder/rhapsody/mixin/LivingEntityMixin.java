@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
@@ -22,7 +21,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable {
         super(type, world);
     }
 
-    @Inject(method = "tryAttack", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "tryAttack", at = @At("HEAD"))
     private void exaltisripoff(ServerWorld world, Entity target, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity living = (LivingEntity) (Object) this;
 
@@ -34,8 +33,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable {
                 living.setVelocity(player.getPos().subtract(living.getPos()).multiply(1));
                 living.addVelocity(0, 0.5f, 0);
                 living.velocityModified = true;
-
-                cir.cancel();
             }
         }
     }

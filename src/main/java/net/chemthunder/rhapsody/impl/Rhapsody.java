@@ -1,5 +1,6 @@
 package net.chemthunder.rhapsody.impl;
 
+import net.acoyt.acornlib.api.ALib;
 import net.chemthunder.rhapsody.impl.index.RhapsodyDataComponents;
 import net.chemthunder.rhapsody.impl.index.RhapsodyItems;
 import net.chemthunder.rhapsody.impl.index.RhapsodyParticles;
@@ -20,6 +21,8 @@ public class Rhapsody implements ModInitializer {
         RhapsodySounds.init();
         RhapsodyDataComponents.init();
         RhapsodyParticles.init();
+
+        ALib.registerModMenu(MOD_ID, 0xFF941957);
 
 		LOGGER.info("Hello Fabric world!");
 	}

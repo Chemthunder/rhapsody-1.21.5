@@ -3,6 +3,7 @@
   "package": "net.chemthunder.rhapsody.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "ItemStackMixin",
     "LivingEntityMixin"
   ],
   "injectors": {

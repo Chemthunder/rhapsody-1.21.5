@@ -23,6 +23,10 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
+    mavenLocal()
+
+    // Cloth Config
+    maven { url "https://maven.shedaniel.me/" }
 
     // Mod Menu
     maven {
@@ -35,6 +39,40 @@ repositories {
         name "Ladysnake Releases"
         url "https://maven.ladysnake.org/releases"
     }
+
+    // Jitpack
+    maven { url 'https://jitpack.io' }
+
+    // MixinSquared
+    maven { url "https://maven.bawnorton.com/releases" }
+
+    // PlayerAnimator
+    maven {
+        name "KosmX's maven"
+        url 'https://maven.kosmx.dev/'
+    }
+
+    // Datasync
+    maven {
+        name "datasync"
+        url "https://maven.uuid.gg/releases"
+    }
+
+    // Appleskin
+    maven {
+        name "appleskin"
+        url "https://maven.ryanliptak.com/"
+    }
+
+    // Voicechat
+    maven {
+        name "henkelmax.public"
+        url 'https://maven.maxhenkel.de/repository/public'
+    }
+    mavenCentral()
+
+    // REI
+    maven { url "<https://maven.shedaniel.me/>" }
 }
 
 fabricApi {
@@ -54,6 +92,10 @@ dependencies {
 
     // AcornLib
     modImplementation "maven.modrinth:acornlib:${project.acornlib_version}"
+    modImplementation "maven.modrinth:nitrogen_rbn:${project.nitrogen_version}"
+
+    // Libs
+    //modCompileOnly files("libs/amaranthine-1.3.4.jar")
 
     // Config
     modApi("com.terraformersmc:modmenu:${project.modmenu_version}")
@@ -62,10 +104,6 @@ dependencies {
     // Cardinal Components API
     modImplementation include("org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}")
     modImplementation include("org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}")
-
-    // nitrogen
-    modImplementation("maven.modrinth:nitrogen_rbn:${project.nitrogen_version}")
-	
 }
 
 processResources {

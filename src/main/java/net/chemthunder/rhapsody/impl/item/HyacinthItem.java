@@ -86,7 +86,7 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
         BlockPos pos = victim.getBlockPos();
 
         if (souls.size() == 3) {
-            Rhapsody.LOGGER.info("this runs if theres three charges upon kill!!!!");
+            victim.setVelocity(0, 0, 0);
 
             Box area = new Box(pos).expand(100);
             List<LivingEntity> entities = world.getEntitiesByClass(LivingEntity.class, area, entity -> true);
@@ -157,6 +157,7 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
                 souls.add(victim.getType().getTranslationKey().trim().toString());
             }
             stack.set(RhapsodyDataComponents.EMBRACED_SOULS, souls);
+            user.playSound(SoundEvents.ENTITY_ALLAY_AMBIENT_WITH_ITEM);
         } else {
             souls.clear();
             stack.set(RhapsodyDataComponents.EMBRACED_SOULS, souls);
@@ -167,7 +168,6 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
         List<String> comp = new ArrayList<>(stack.getOrDefault(RhapsodyDataComponents.EMBRACED_SOULS, List.of()));
         textConsumer.accept(Text.translatable("lore.hyacinth").formatted(Formatting.ITALIC).withColor(0xFF941957));
 
-
         if (!comp.isEmpty()) {
             for (String value : comp) {
                 textConsumer.accept(Text.translatable(value.trim()).formatted(Formatting.ITALIC).withColor(0xFF75415b));
@@ -175,8 +175,6 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
         } else {
             textConsumer.accept(Text.literal("Empty.").formatted(Formatting.ITALIC).withColor(0xFF75415b));
         }
-
-
         super.appendTooltip(stack, context, displayComponent, textConsumer, type);
     }
 

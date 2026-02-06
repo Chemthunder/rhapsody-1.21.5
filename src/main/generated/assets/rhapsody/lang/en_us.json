@@ -1,7 +1,14 @@
 {
+  "death.attack.backlash": "%1$s's heart was ripped open",
+  "death.attack.backlash.item": "%1$s's heart was ripped open whilst fighting %2$s wielding %3$s",
+  "death.attack.backlash.player": "%1$s's heart was ripped open whilst fighting %2$s",
   "death.attack.embrace": "%1$s's soul was condemned",
   "death.attack.embrace.item": "%1$s's soul was condemned",
   "death.attack.embrace.player": "%1$s's soul was condemned",
+  "death.attack.torn": "%1$s was slashed open",
+  "death.attack.torn.item": "%1$s was slashed open by %2$s wielding %3$s",
+  "death.attack.torn.player": "%1$s was slashed open by %2$s",
   "item.rhapsody.hyacinth": "Hyacinth",
-  "lore.hyacinth": "The God Butcher."
+  "lore.hyacinth": "The God Butcher.",
+  "text.hyacinth.backlash": "Your soul feels torn open."
 }

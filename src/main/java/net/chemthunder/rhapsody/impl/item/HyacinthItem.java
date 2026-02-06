@@ -7,7 +7,6 @@ import net.acoyt.acornlib.api.items.CustomKillSourceItem;
 import net.acoyt.acornlib.api.items.KillEffectItem;
 import net.acoyt.acornlib.api.util.ParticleUtils;
 import net.acoyt.acornlib.impl.client.particle.SweepParticleEffect;
-import net.chemthunder.rhapsody.impl.Rhapsody;
 import net.chemthunder.rhapsody.impl.cca.entity.PlayerFlashComponent;
 import net.chemthunder.rhapsody.impl.index.RhapsodyDataComponents;
 import net.chemthunder.rhapsody.impl.index.RhapsodyParticles;
@@ -15,7 +14,6 @@ import net.chemthunder.rhapsody.impl.index.RhapsodySounds;
 import net.chemthunder.rhapsody.impl.index.data.RhapsodyDamageTypes;
 import net.chemthunder.rhapsody.ported.api.ColorableItem;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.TooltipDisplayComponent;
@@ -29,13 +27,12 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.ShieldItem;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.test.TestEnvironmentDefinition;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -144,11 +141,9 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
 
                 LightningEntity bolt = new LightningEntity(EntityType.LIGHTNING_BOLT, serverWorld);
                 bolt.setPos(victim.getX() + 0.5f, victim.getY(), victim.getZ() + 0.5f);
-
                 serverWorld.spawnEntity(bolt);
             }
         }
-
 
         if (souls.size() < 3) {
             if (victim instanceof PlayerEntity player) {
@@ -179,7 +174,13 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
     }
 
     public DamageSource getKillSource(LivingEntity livingEntity) {
-        return livingEntity.getDamageSources().create(RhapsodyDamageTypes.EMBRACE);
+        ItemStack stack = livingEntity.getStackInArm(livingEntity.getMainArm());
+        List<String> comp = new ArrayList<>(stack.getOrDefault(RhapsodyDataComponents.EMBRACED_SOULS, List.of()));
+
+        if (comp.size() == 3) {
+            return livingEntity.getDamageSources().create(RhapsodyDamageTypes.EMBRACE);
+        }
+        return livingEntity.getDamageSources().create(RhapsodyDamageTypes.TORN);
     }
 
     public ActionResult use(World world, PlayerEntity user, Hand hand) {
@@ -190,7 +191,6 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
     public void playHitSound(PlayerEntity player, Entity target) {
         player.playSound(SoundEvents.ENTITY_IRON_GOLEM_STEP, 1.0F, (float) (1.0F + player.getRandom().nextGaussian() / 10f) * player.getAttackCooldownProgress(0.5F));
     }
-
 
     // itembar -------
     public boolean hasGlint(ItemStack stack) {

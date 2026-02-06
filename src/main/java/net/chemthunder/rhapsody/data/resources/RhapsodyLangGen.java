@@ -28,8 +28,23 @@ public class RhapsodyLangGen extends FabricLanguageProvider {
                 "%1$s's soul was condemned"
         );
 
+        registerDamageType(translationBuilder,
+                RhapsodyDamageTypes.BACKLASH,
+                "%1$s's heart was ripped open",
+                "%1$s's heart was ripped open whilst fighting %2$s wielding %3$s",
+                "%1$s's heart was ripped open whilst fighting %2$s"
+        );
+
+        registerDamageType(translationBuilder,
+                RhapsodyDamageTypes.TORN,
+                "%1$s was slashed open",
+                "%1$s was slashed open by %2$s wielding %3$s",
+                "%1$s was slashed open by %2$s"
+        );
+
         // misc
         translationBuilder.add("lore.hyacinth", "The God Butcher.");
+        translationBuilder.add("text.hyacinth.backlash", "Your soul feels torn open.");
     }
 
     public void registerDamageType(TranslationBuilder builder, RegistryKey<DamageType> registryKey, String normal, String item, String player) {

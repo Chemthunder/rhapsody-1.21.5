@@ -13,6 +13,8 @@ import org.jetbrains.annotations.Nullable;
 
 public interface RhapsodyDamageTypes {
     RegistryKey<DamageType> EMBRACE = of("embrace");
+    RegistryKey<DamageType> BACKLASH = of("backlash");
+    RegistryKey<DamageType> TORN = of("torn");
 
     private static RegistryKey<DamageType> of(String id) {
         return RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Rhapsody.id(id));
@@ -20,6 +22,8 @@ public interface RhapsodyDamageTypes {
 
     static void bootstrap(Registerable<DamageType> registerable) {
         registerable.register(EMBRACE, new DamageType("embrace", DamageScaling.NEVER, 0.1F));
+        registerable.register(BACKLASH, new DamageType("backlash", DamageScaling.NEVER, 0.1F));
+        registerable.register(TORN, new DamageType("torn", DamageScaling.NEVER, 0.1F));
     }
 
     static DamageSource create(World world, RegistryKey<DamageType> key, @Nullable Entity source, @Nullable Entity attacker) {

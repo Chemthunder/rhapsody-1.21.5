@@ -1,6 +1,5 @@
 package net.chemthunder.rhapsody.impl.index;
 
-import net.acoyt.acornlib.impl.client.particle.SweepAttackParticle;
 import net.chemthunder.rhapsody.impl.Rhapsody;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;

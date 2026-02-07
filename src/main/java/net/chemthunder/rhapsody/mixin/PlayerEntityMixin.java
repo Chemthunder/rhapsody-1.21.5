@@ -2,6 +2,7 @@ package net.chemthunder.rhapsody.mixin;
 
 import net.chemthunder.rhapsody.impl.cca.entity.PlayerFlashComponent;
 import net.chemthunder.rhapsody.impl.index.RhapsodyItems;
+import net.chemthunder.rhapsody.impl.index.RhapsodyParticles;
 import net.chemthunder.rhapsody.impl.index.RhapsodySounds;
 import net.chemthunder.rhapsody.impl.index.data.RhapsodyDamageTypes;
 import net.minecraft.entity.Entity;
@@ -35,11 +36,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             if (living != null) {
                 if (player.getStackInHand(player.getActiveHand()).isOf(RhapsodyItems.HYACINTH) && player.isUsingItem()) {
                     if (!player.getItemCooldownManager().isCoolingDown(RhapsodyItems.HYACINTH.getDefaultStack())) {
-                        int cooldown = 600;
-                        int multiplier = 4;
-
-
-                        cooldown = 20;
+                        int cooldown = 200;
+                        int multiplier = 3;
 
                         PlayerFlashComponent flash = PlayerFlashComponent.KEY.get(player);
                         flash.flashTicks = 15;
@@ -60,9 +58,22 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                             flasher.sync();
                         }
 
-                        living.setVelocity(player.getPos().subtract(living.getPos()).multiply(-amount / 16));
+                        living.setVelocity(player.getPos().subtract(living.getPos()).multiply(-amount / 20));
                         living.addVelocity(0, 0.4f, 0);
                         living.velocityModified = true;
+
+                        world.spawnParticles(RhapsodyParticles.REFLECTION,
+                                living.getX() + 0.5f,
+                                living.getY() + 1.0f,
+                                living.getZ() + 0.5f,
+                                5,
+                                0,
+                                0,
+                                0,
+                                0.1f
+                        );
+
+
                         cir.setReturnValue(false);
                     }
                 }

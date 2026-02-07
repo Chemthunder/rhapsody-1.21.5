@@ -24,6 +24,11 @@ public abstract class PlayerEntityRendererMixin {
             } else {
                 cir.setReturnValue(BipedEntityModel.ArmPose.CROSSBOW_CHARGE);
             }
+
+            if (player.isUsingItem()) {
+                player.bodyYaw = player.headYaw;
+                player.lastBodyYaw = player.lastHeadYaw;
+            }
         }
     }
 

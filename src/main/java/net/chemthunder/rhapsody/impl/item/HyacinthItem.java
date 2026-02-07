@@ -31,6 +31,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -64,7 +65,7 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
 
     public static AttributeModifiersComponent createAttributeModifiers() {
         return AttributeModifiersComponent.builder()
-                .add(EntityAttributes.ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, 8.5F, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+                .add(EntityAttributes.ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, 8.0F, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
                 .add(EntityAttributes.ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, -2.9F, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
                 .build();
     }
@@ -145,6 +146,23 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
                 LightningEntity bolt = new LightningEntity(EntityType.LIGHTNING_BOLT, serverWorld);
                 bolt.setPos(victim.getX() + 0.5f, victim.getY(), victim.getZ() + 0.5f);
                 serverWorld.spawnEntity(bolt);
+
+                for (ServerPlayerEntity serverPlayer : serverWorld.getPlayers()) {
+                    String entityName = null;
+                    boolean shouldShowMessage = false;
+                    if (victim instanceof LivingEntity) {
+                        entityName = victim.getType().getTranslationKey();
+                    }
+
+                    if (victim instanceof PlayerEntity player) {
+                        entityName = player.getNameForScoreboard();
+                        shouldShowMessage = true;
+                    }
+
+                    if (shouldShowMessage) {
+                        serverPlayer.sendMessage(Text.translatable(entityName).append(Text.literal(" had their fate set still")), false);
+                    }
+                }
             }
         }
 

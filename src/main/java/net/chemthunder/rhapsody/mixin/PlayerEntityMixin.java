@@ -38,9 +38,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                         int cooldown = 600;
                         int multiplier = 4;
 
-                        if (player.isInCreativeMode()) {
-                            cooldown = 20;
-                        }
+
+                        cooldown = 20;
 
                         PlayerFlashComponent flash = PlayerFlashComponent.KEY.get(player);
                         flash.flashTicks = 15;
@@ -61,8 +60,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                             flasher.sync();
                         }
 
-                        living.setVelocity(player.getPos().subtract(living.getPos()).multiply(-0.7));
-                        living.addVelocity(0, 0.7f, 0);
+                        living.setVelocity(player.getPos().subtract(living.getPos()).multiply(-amount / 16));
+                        living.addVelocity(0, 0.4f, 0);
                         living.velocityModified = true;
                         cir.setReturnValue(false);
                     }

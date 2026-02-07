@@ -14,6 +14,7 @@ import net.chemthunder.rhapsody.impl.index.RhapsodySounds;
 import net.chemthunder.rhapsody.impl.index.data.RhapsodyDamageTypes;
 import net.chemthunder.rhapsody.ported.api.ColorableItem;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.render.CloudRenderer;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.TooltipDisplayComponent;
@@ -99,6 +100,9 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
                         player.playSoundToPlayer(RhapsodySounds.HYACINTH_EXECUTE, SoundCategory.PLAYERS, 1, 1);
                         player.playSoundToPlayer(SoundEvents.ENTITY_ALLAY_DEATH, SoundCategory.PLAYERS, 1, 0.1f);
                         player.playSoundToPlayer(SoundEvents.ENTITY_WARDEN_DEATH, SoundCategory.PLAYERS, 1, 5f);
+                        player.playSoundToPlayer(SoundEvents.ENTITY_HORSE_DEATH, SoundCategory.PLAYERS, 1, 0.1f);
+                        player.playSoundToPlayer(SoundEvents.ENTITY_MULE_DEATH, SoundCategory.PLAYERS, 1, 0.1f);
+                        player.playSoundToPlayer(SoundEvents.ENTITY_RABBIT_DEATH, SoundCategory.PLAYERS, 1, 0.1f);
                         shaker.addScreenShake(1.5f, 20);
                     }
                 }
@@ -137,7 +141,6 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
                         0,
                         0.5f
                 );
-
 
                 LightningEntity bolt = new LightningEntity(EntityType.LIGHTNING_BOLT, serverWorld);
                 bolt.setPos(victim.getX() + 0.5f, victim.getY(), victim.getZ() + 0.5f);
@@ -189,7 +192,7 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
     }
 
     public void playHitSound(PlayerEntity player, Entity target) {
-        player.playSound(SoundEvents.ENTITY_IRON_GOLEM_STEP, 1.0F, (float) (1.0F + player.getRandom().nextGaussian() / 10f) * player.getAttackCooldownProgress(0.5F));
+        player.playSound(SoundEvents.ENTITY_ALLAY_HURT, 1.0F, (float) (1.0F + player.getRandom().nextGaussian() / 10f) * player.getAttackCooldownProgress(0.5F));
     }
 
     // itembar -------

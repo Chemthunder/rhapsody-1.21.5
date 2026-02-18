@@ -10,8 +10,6 @@ import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.SpawnHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -50,7 +48,7 @@ public abstract class InGameHudMixin {
 
 
             if (RiftbreakWorldEventComponent.KEY.get(player.getWorld()).isActive) {
-                this.renderOverlay(context, SILLY_VIGNETTE, 0.3f);
+                this.renderOverlay(context, SILLY_VIGNETTE, 0.5f);
             }
         }
     }

@@ -14,8 +14,13 @@
     "requireAnnotations": true
   },
   "client": [
+    "client.BlockModelRendererMixin",
+    "client.ClientWorldMixin",
+    "client.DimensionEffectsMixin",
     "client.InGameHudMixin",
     "client.PlayerEntityRendererMixin",
+    "client.SkyRenderingMixin",
+    "client.WeatherRenderingMixin",
     "client.WorldRendererMixin",
     "nitrogen.DrawContextAccessor",
     "nitrogen.HandledScreenMixin"

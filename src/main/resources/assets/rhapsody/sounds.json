@@ -11,5 +11,34 @@
     "sounds": [
       "rhapsody:item/hyacinth_slash"
     ]
+  },
+
+
+  "event.bigass_boom": {
+    "subtitle": "sounds.hyacinth.bigass_boom",
+    "sounds": [
+      "rhapsody:event/bigass_boom"
+    ]
+  },
+
+  "event.crash": {
+    "subtitle": "sounds.hyacinth.crash",
+    "sounds": [
+      "rhapsody:event/crash"
+    ]
+  },
+
+  "event.geo": {
+    "subtitle": "sounds.hyacinth.geo",
+    "sounds": [
+      "rhapsody:event/geophormism"
+    ]
+  },
+
+  "event.shatter": {
+    "subtitle": "sounds.hyacinth.shatter",
+    "sounds": [
+      "rhapsody:event/shatter"
+    ]
   }
 }

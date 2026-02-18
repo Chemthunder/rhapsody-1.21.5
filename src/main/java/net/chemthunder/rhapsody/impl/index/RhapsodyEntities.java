@@ -15,7 +15,7 @@ import net.minecraft.registry.RegistryKeys;
 public interface RhapsodyEntities {
     EntityType<KatzeRitualEntity> KATZE_RITUAL = create(
             "katze_ritual",
-            EntityType.Builder.<KatzeRitualEntity>create(
+            EntityType.Builder.create(
                     KatzeRitualEntity::new,
                     SpawnGroup.MISC
             ).dimensions(1.0f, 1.0f)

@@ -45,6 +45,7 @@ public class RhapsodyLangGen extends FabricLanguageProvider {
         // misc
         translationBuilder.add("lore.hyacinth", "The God Butcher.");
         translationBuilder.add("text.hyacinth.backlash", "Your soul feels torn open.");
+        translationBuilder.add("riftbreak.activate", "The skies rend in sorrows deep.");
     }
 
     public void registerDamageType(TranslationBuilder builder, RegistryKey<DamageType> registryKey, String normal, String item, String player) {

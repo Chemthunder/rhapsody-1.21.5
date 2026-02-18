@@ -32,7 +32,9 @@
   ],
   "custom": {
     "cardinal-components": [
-      "rhapsody:flash"
+      "rhapsody:flash",
+      "rhapsody:secondary",
+      "rhapsody:riftbreak"
     ]
   },
   "depends": {

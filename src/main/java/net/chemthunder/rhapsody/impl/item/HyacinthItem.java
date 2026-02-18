@@ -8,6 +8,8 @@ import net.acoyt.acornlib.api.items.KillEffectItem;
 import net.acoyt.acornlib.api.util.ParticleUtils;
 import net.acoyt.acornlib.impl.client.particle.SweepParticleEffect;
 import net.chemthunder.rhapsody.impl.cca.entity.PlayerFlashComponent;
+import net.chemthunder.rhapsody.impl.cca.entity.SecondaryFlashComponent;
+import net.chemthunder.rhapsody.impl.cca.world.RiftbreakWorldEventComponent;
 import net.chemthunder.rhapsody.impl.index.RhapsodyDataComponents;
 import net.chemthunder.rhapsody.impl.index.RhapsodyParticles;
 import net.chemthunder.rhapsody.impl.index.RhapsodySounds;
@@ -27,6 +29,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -168,7 +171,7 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
             if (victim instanceof PlayerEntity player) {
                 souls.add(player.getNameForScoreboard());
             } else {
-                souls.add(victim.getType().getTranslationKey().trim().toString());
+                souls.add(victim.getType().getTranslationKey().trim());
             }
             stack.set(RhapsodyDataComponents.EMBRACED_SOULS, souls);
             user.playSound(SoundEvents.ENTITY_ALLAY_AMBIENT_WITH_ITEM);
@@ -209,6 +212,48 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
 
     public void playHitSound(PlayerEntity player, Entity target) {
         player.playSound(SoundEvents.ENTITY_ALLAY_HURT, 1.0F, (float) (1.0F + player.getRandom().nextGaussian() / 10f) * player.getAttackCooldownProgress(0.5F));
+    }
+
+    public ActionResult useOnBlock(ItemUsageContext context) {
+        PlayerEntity livingEntity = context.getPlayer();
+        ItemStack stack = livingEntity.getStackInArm(livingEntity.getMainArm());
+        List<String> comp = new ArrayList<>(stack.getOrDefault(RhapsodyDataComponents.EMBRACED_SOULS, List.of()));
+
+        if (comp.size() == 3) {
+            if (livingEntity.isSneaking()) {
+                RiftbreakWorldEventComponent we = RiftbreakWorldEventComponent.KEY.get(context.getWorld());
+
+                if (!we.isActive) {
+                    we.isActive = true;
+                    we.sync();
+
+                    if (context.getWorld() instanceof ServerWorld serverWorld) {
+                        for (ServerPlayerEntity serverPlayer : serverWorld.getPlayers()) {
+                            if (serverPlayer instanceof ScreenShaker shaker) {
+                                shaker.addScreenShake(1, 70);
+
+                                SecondaryFlashComponent flashComponent = SecondaryFlashComponent.KEY.get(serverPlayer);
+
+                                flashComponent.flashTicks = 60;
+                                flashComponent.sync();
+
+                                serverPlayer.sendMessage(Text.translatable("riftbreak.activate").withColor(0xFFfc036b), true);
+
+                                serverPlayer.playSoundToPlayer(RhapsodySounds.EVENT_BOOM, SoundCategory.MASTER, 1, 1);
+                                serverPlayer.playSoundToPlayer(RhapsodySounds.EVENT_CRASH, SoundCategory.MASTER, 1, 1);
+                                serverPlayer.playSoundToPlayer(RhapsodySounds.EVENT_GEO, SoundCategory.MASTER, 1, 1);
+                                serverPlayer.playSoundToPlayer(RhapsodySounds.EVENT_SHATTER, SoundCategory.MASTER, 1, 1);
+                            }
+                        }
+                    }
+                } else {
+                    we.isActive = false;
+                    we.sync();
+                }
+            }
+        }
+
+        return super.useOnBlock(context);
     }
 
     // itembar -------

@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "ItemStackMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "SpawnHelperMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -15,6 +16,7 @@
   "client": [
     "client.InGameHudMixin",
     "client.PlayerEntityRendererMixin",
+    "client.WorldRendererMixin",
     "nitrogen.DrawContextAccessor",
     "nitrogen.HandledScreenMixin"
   ]

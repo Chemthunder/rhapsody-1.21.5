@@ -25,9 +25,6 @@ repositories {
     }
     mavenLocal()
 
-    // Cloth Config
-    maven { url "https://maven.shedaniel.me/" }
-
     // Mod Menu
     maven {
         name = "Terraformers"
@@ -39,40 +36,6 @@ repositories {
         name "Ladysnake Releases"
         url "https://maven.ladysnake.org/releases"
     }
-
-    // Jitpack
-    maven { url 'https://jitpack.io' }
-
-    // MixinSquared
-    maven { url "https://maven.bawnorton.com/releases" }
-
-    // PlayerAnimator
-    maven {
-        name "KosmX's maven"
-        url 'https://maven.kosmx.dev/'
-    }
-
-    // Datasync
-    maven {
-        name "datasync"
-        url "https://maven.uuid.gg/releases"
-    }
-
-    // Appleskin
-    maven {
-        name "appleskin"
-        url "https://maven.ryanliptak.com/"
-    }
-
-    // Voicechat
-    maven {
-        name "henkelmax.public"
-        url 'https://maven.maxhenkel.de/repository/public'
-    }
-    mavenCentral()
-
-    // REI
-    maven { url "<https://maven.shedaniel.me/>" }
 }
 
 fabricApi {
@@ -104,6 +67,7 @@ dependencies {
     // Cardinal Components API
     modImplementation include("org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}")
     modImplementation include("org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}")
+    modImplementation include("org.ladysnake.cardinal-components-api:cardinal-components-world:${project.cca_version}")
 }
 
 processResources {

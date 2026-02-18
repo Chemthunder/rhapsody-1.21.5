@@ -15,6 +15,11 @@ public interface RhapsodySounds {
     SoundEvent HYACINTH_EXECUTE = create("item.hyacinth_execute");
     SoundEvent HYACINTH_SLASH = create("item.hyacinth_slash");
 
+    SoundEvent EVENT_BOOM = create("event.bigass_boom");
+    SoundEvent EVENT_GEO = create("event.geo");
+    SoundEvent EVENT_SHATTER = create("event.shatter");
+    SoundEvent EVENT_CRASH = create("event.crash");
+
     private static SoundEvent create(String name) {
         SoundEvent soundEvent = SoundEvent.of(Rhapsody.id(name));
         SOUNDS.put(soundEvent, Rhapsody.id(name));

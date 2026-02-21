@@ -1,0 +1,57 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:select",
+          "cases": [
+            {
+              "model": {
+                "type": "minecraft:model",
+                "model": "rhapsody:item/hyacinth"
+              },
+              "when": [
+                "gui",
+                "ground",
+                "fixed"
+              ]
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:model",
+            "model": "rhapsody:item/hyacinth_blocking_fragmented"
+          },
+          "property": "minecraft:display_context"
+        },
+        "when": true
+      },
+      {
+        "model": {
+          "type": "minecraft:select",
+          "cases": [
+            {
+              "model": {
+                "type": "minecraft:model",
+                "model": "rhapsody:item/hyacinth"
+              },
+              "when": [
+                "gui",
+                "ground",
+                "fixed"
+              ]
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:model",
+            "model": "rhapsody:item/hyacinth_blocking"
+          },
+          "property": "minecraft:display_context"
+        },
+        "when": false
+      }
+    ],
+    "component": "rhapsody:is_fragmented",
+    "property": "minecraft:component"
+  }
+}

@@ -2,6 +2,7 @@ package net.chemthunder.rhapsody.impl.index.data;
 
 import net.chemthunder.rhapsody.impl.Rhapsody;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageScaling;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageType;
@@ -18,6 +19,10 @@ public interface RhapsodyDamageTypes {
 
     private static RegistryKey<DamageType> of(String id) {
         return RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Rhapsody.id(id));
+    }
+
+    static DamageSource embrace(LivingEntity entity) {
+        return entity.getDamageSources().create(EMBRACE);
     }
 
     static void bootstrap(Registerable<DamageType> registerable) {

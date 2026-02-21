@@ -1,17 +1,19 @@
 package net.chemthunder.rhapsody.mixin;
 
 import net.chemthunder.rhapsody.impl.cca.entity.PlayerFlashComponent;
+import net.chemthunder.rhapsody.impl.index.RhapsodyDataComponents;
 import net.chemthunder.rhapsody.impl.index.RhapsodyItems;
 import net.chemthunder.rhapsody.impl.index.RhapsodyParticles;
 import net.chemthunder.rhapsody.impl.index.RhapsodySounds;
 import net.chemthunder.rhapsody.impl.index.data.RhapsodyDamageTypes;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
@@ -30,14 +32,21 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
     private void hyacinthParry(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         PlayerEntity player = (PlayerEntity) (Object) this;
-        Entity test = source.getAttacker();
-
-        if (test instanceof LivingEntity living) {
+        ItemStack stack = player.getStackInHand(player.getActiveHand());
+        if (source.getAttacker() instanceof LivingEntity living) {
             if (living != null) {
-                if (player.getStackInHand(player.getActiveHand()).isOf(RhapsodyItems.HYACINTH) && player.isUsingItem()) {
+                if (stack.isOf(RhapsodyItems.HYACINTH) && player.isUsingItem()) {
                     if (!player.getItemCooldownManager().isCoolingDown(RhapsodyItems.HYACINTH.getDefaultStack())) {
-                        int cooldown = 200;
-                        int multiplier = 3;
+                        int cooldown;
+                        int multiplier;
+
+                        if (stack.getOrDefault(RhapsodyDataComponents.IS_FRAGMENTED, false) == Boolean.TRUE) {
+                            cooldown = 100;
+                            multiplier = 2;
+                        } else {
+                            cooldown = 200;
+                            multiplier = 3;
+                        }
 
                         PlayerFlashComponent flash = PlayerFlashComponent.KEY.get(player);
                         flash.flashTicks = 15;
@@ -45,6 +54,11 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
                         player.getItemCooldownManager().set(RhapsodyItems.HYACINTH.getDefaultStack(), cooldown);
                         player.playSoundToPlayer(RhapsodySounds.HYACINTH_SLASH, SoundCategory.PLAYERS, 1, 1);
+
+                        if (stack.getOrDefault(RhapsodyDataComponents.IS_FRAGMENTED, false) == true) {
+                            player.playSoundToPlayer(SoundEvents.ENTITY_ALLAY_HURT, SoundCategory.PLAYERS, 1, 0.1f);
+                        }
+
                         living.damage(world, living.getDamageSources().create(RhapsodyDamageTypes.BACKLASH), (amount / multiplier));
                         player.damage(world, living.getDamageSources().create(RhapsodyDamageTypes.BACKLASH), (amount / multiplier));
 

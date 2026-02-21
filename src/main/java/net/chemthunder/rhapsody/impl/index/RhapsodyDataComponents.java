@@ -11,6 +11,7 @@ import java.util.function.UnaryOperator;
 
 public interface RhapsodyDataComponents {
     ComponentType<List<String>> EMBRACED_SOULS = create("embraced_souls", builder -> builder.codec(Codec.STRING.listOf()));
+    ComponentType<Boolean> IS_FRAGMENTED = create("is_fragmented", builder -> builder.codec(Codec.BOOL));
 
     static <T> ComponentType<T> create(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, Rhapsody.id(name), (builderOperator.apply(ComponentType.builder()).build()));

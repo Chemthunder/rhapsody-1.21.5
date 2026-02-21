@@ -50,13 +50,26 @@ import java.util.function.Consumer;
 
 @SuppressWarnings("deprecation")
 public class HyacinthItem extends Item implements CustomHitParticleItem, KillEffectItem, ColorableItem, CustomKillSourceItem, CustomHitSoundItem {
-    public int startColor(ItemStack itemStack) {return 0xFF08060a;}
-    public int endColor(ItemStack itemStack) {return 0xFF342b38;}
-    public int backgroundColor(ItemStack itemStack) {return 0xF008060a;}
+    public int startColor(ItemStack itemStack) {
+        return itemStack.getOrDefault(RhapsodyDataComponents.IS_FRAGMENTED, false) ?  0xFF63001c : 0xFF08060a;
+    }
+
+    public int endColor(ItemStack itemStack) {
+        return itemStack.getOrDefault(RhapsodyDataComponents.IS_FRAGMENTED, false) ? 0xFFd1003b : 0xFF342b38;
+    }
+
+    public int backgroundColor(ItemStack itemStack) {
+        return itemStack.getOrDefault(RhapsodyDataComponents.IS_FRAGMENTED, false) ? 0xFF26050e : 0xF008060a;
+    }
+
+    public Text getName(ItemStack stack) {
+        return super.getName(stack).copy().withColor(stack.getOrDefault(RhapsodyDataComponents.IS_FRAGMENTED, false) ? 0xFFd1003b : 0x2b1f2e);
+    }
 
     public HyacinthItem(Settings settings) {
         super(settings
-                .component(RhapsodyDataComponents.EMBRACED_SOULS, List.of()));
+                .component(RhapsodyDataComponents.EMBRACED_SOULS, List.of())
+                .component(RhapsodyDataComponents.IS_FRAGMENTED, false));
     }
 
     public static final SweepParticleEffect[] EFFECTS = new SweepParticleEffect[]{
@@ -82,10 +95,10 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
     public void killEntity(World world, ItemStack stack, LivingEntity user, LivingEntity victim) {
         List<String> comp = stack.getOrDefault(RhapsodyDataComponents.EMBRACED_SOULS, List.of());
         List<String> souls = new ArrayList<>(comp);
-
+        var dubios = RhapsodyDataComponents.IS_FRAGMENTED;
         BlockPos pos = victim.getBlockPos();
 
-        if (souls.size() == 3) {
+        if (souls.size() == 3 || stack.getOrDefault(dubios, false) == true) {
             victim.setVelocity(0, 0, 0);
 
             Box area = new Box(pos).expand(100);
@@ -167,42 +180,46 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
             }
         }
 
-        if (souls.size() < 3) {
-            if (victim instanceof PlayerEntity player) {
-                souls.add(player.getNameForScoreboard());
+        if (stack.getOrDefault(dubios, false) == false) {
+            if (souls.size() < 3) {
+                if (victim instanceof PlayerEntity player) {
+                    souls.add(player.getNameForScoreboard());
+                } else {
+                    souls.add(victim.getType().getTranslationKey().trim());
+                }
+                stack.set(RhapsodyDataComponents.EMBRACED_SOULS, souls);
+                user.playSound(SoundEvents.ENTITY_ALLAY_AMBIENT_WITH_ITEM);
             } else {
-                souls.add(victim.getType().getTranslationKey().trim());
+                souls.clear();
+                stack.set(RhapsodyDataComponents.EMBRACED_SOULS, souls);
             }
-            stack.set(RhapsodyDataComponents.EMBRACED_SOULS, souls);
-            user.playSound(SoundEvents.ENTITY_ALLAY_AMBIENT_WITH_ITEM);
-        } else {
-            souls.clear();
-            stack.set(RhapsodyDataComponents.EMBRACED_SOULS, souls);
         }
     }
 
     public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
         List<String> comp = new ArrayList<>(stack.getOrDefault(RhapsodyDataComponents.EMBRACED_SOULS, List.of()));
-        textConsumer.accept(Text.translatable("lore.hyacinth").formatted(Formatting.ITALIC).withColor(0xFF941957));
 
-        if (!comp.isEmpty()) {
-            for (String value : comp) {
-                textConsumer.accept(Text.translatable(value.trim()).formatted(Formatting.ITALIC).withColor(0xFF75415b));
+        if (stack.getOrDefault(RhapsodyDataComponents.IS_FRAGMENTED, false) == false) {
+            textConsumer.accept(Text.translatable("lore.hyacinth").formatted(Formatting.ITALIC).withColor(0xFF941957));
+
+            if (!comp.isEmpty()) {
+                for (String value : comp) {
+                    textConsumer.accept(Text.translatable(value.trim()).formatted(Formatting.ITALIC).withColor(0xFF75415b));
+                }
+            } else {
+                textConsumer.accept(Text.literal("Empty.").formatted(Formatting.ITALIC).withColor(0xFF75415b));
             }
         } else {
-            textConsumer.accept(Text.literal("Empty.").formatted(Formatting.ITALIC).withColor(0xFF75415b));
+            textConsumer.accept(Text.translatable("lore.hyacinth.fragmented.1").formatted(Formatting.ITALIC).formatted(Formatting.BOLD).withColor(0xFF9c002a));
+            textConsumer.accept(Text.translatable("lore.hyacinth.fragmented.2").formatted(Formatting.ITALIC).formatted(Formatting.BOLD).withColor(0xFF9c002a));
+            textConsumer.accept(Text.translatable("lore.hyacinth.fragmented.3").formatted(Formatting.ITALIC).formatted(Formatting.BOLD).withColor(0xFF9c002a));
         }
         super.appendTooltip(stack, context, displayComponent, textConsumer, type);
     }
 
     public DamageSource getKillSource(LivingEntity livingEntity) {
         ItemStack stack = livingEntity.getStackInArm(livingEntity.getMainArm());
-        List<String> comp = new ArrayList<>(stack.getOrDefault(RhapsodyDataComponents.EMBRACED_SOULS, List.of()));
-
-        if (comp.size() == 3) {
-            return livingEntity.getDamageSources().create(RhapsodyDamageTypes.EMBRACE);
-        }
-        return livingEntity.getDamageSources().create(RhapsodyDamageTypes.TORN);
+        return stack.getOrDefault(RhapsodyDataComponents.IS_FRAGMENTED, false) == true ? RhapsodyDamageTypes.embrace(livingEntity) : livingEntity.getDamageSources().create(RhapsodyDamageTypes.TORN);
     }
 
     public ActionResult use(World world, PlayerEntity user, Hand hand) {
@@ -216,39 +233,62 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
 
     public ActionResult useOnBlock(ItemUsageContext context) {
         PlayerEntity livingEntity = context.getPlayer();
-        ItemStack stack = livingEntity.getStackInArm(livingEntity.getMainArm());
-        List<String> comp = new ArrayList<>(stack.getOrDefault(RhapsodyDataComponents.EMBRACED_SOULS, List.of()));
+        RiftbreakWorldEventComponent we = RiftbreakWorldEventComponent.KEY.get(context.getWorld());
 
-        if (comp.size() == 3) {
-            if (livingEntity.isSneaking()) {
-                RiftbreakWorldEventComponent we = RiftbreakWorldEventComponent.KEY.get(context.getWorld());
+        if (livingEntity != null) {
+            ItemStack stack = livingEntity.getOffHandStack();
+            List<String> comp = new ArrayList<>(stack.getOrDefault(RhapsodyDataComponents.EMBRACED_SOULS, List.of()));
+            if (context.getWorld() instanceof ServerWorld serverWorld) {
+                if (livingEntity.getOffHandStack().isOf(this)) {
+                    if (livingEntity.isSneaking()) {
+                        stack.set(RhapsodyDataComponents.EMBRACED_SOULS, comp);
 
-                if (!we.isActive) {
-                    we.isActive = true;
-                    we.sync();
+                        if (!we.isActive) {
+                            we.isActive = true;
+                            we.sync();
 
-                    if (context.getWorld() instanceof ServerWorld serverWorld) {
-                        for (ServerPlayerEntity serverPlayer : serverWorld.getPlayers()) {
-                            if (serverPlayer instanceof ScreenShaker shaker) {
-                                shaker.addScreenShake(1, 70);
+                            stack.set(RhapsodyDataComponents.IS_FRAGMENTED, true);
+                            comp.clear();
 
-                                SecondaryFlashComponent flashComponent = SecondaryFlashComponent.KEY.get(serverPlayer);
+                            serverWorld.setTimeOfDay(18000);
 
-                                flashComponent.flashTicks = 60;
+                            for (ServerPlayerEntity serverPlayer : serverWorld.getPlayers()) {
+                                if (serverPlayer instanceof ScreenShaker shaker) {
+                                    shaker.addScreenShake(1, 70);
+
+                                    SecondaryFlashComponent flashComponent = SecondaryFlashComponent.KEY.get(serverPlayer);
+
+                                    flashComponent.flashTicks = 60;
+                                    flashComponent.sync();
+
+                                    serverPlayer.sendMessage(Text.translatable("riftbreak.activate").withColor(0xFFfc036b), true);
+
+                                    serverPlayer.playSoundToPlayer(RhapsodySounds.EVENT_BOOM, SoundCategory.MASTER, 1, 1);
+                                    serverPlayer.playSoundToPlayer(RhapsodySounds.EVENT_CRASH, SoundCategory.MASTER, 1, 1);
+                                    serverPlayer.playSoundToPlayer(RhapsodySounds.EVENT_GEO, SoundCategory.MASTER, 1, 1);
+                                    serverPlayer.playSoundToPlayer(RhapsodySounds.EVENT_SHATTER, SoundCategory.MASTER, 1, 1);
+                                }
+                            }
+                        } else {
+                            we.isActive = false;
+                            we.sync();
+
+                            stack.set(RhapsodyDataComponents.IS_FRAGMENTED, false);
+
+                            for (ServerPlayerEntity serverPlayer : serverWorld.getPlayers()) {
+                                PlayerFlashComponent flashComponent = PlayerFlashComponent.KEY.get(serverPlayer);
+
+                                flashComponent.flashTicks = 40;
                                 flashComponent.sync();
 
-                                serverPlayer.sendMessage(Text.translatable("riftbreak.activate").withColor(0xFFfc036b), true);
+                                serverPlayer.playSoundToPlayer(SoundEvents.BLOCK_BEACON_AMBIENT, SoundCategory.MASTER, 1, 1);
 
-                                serverPlayer.playSoundToPlayer(RhapsodySounds.EVENT_BOOM, SoundCategory.MASTER, 1, 1);
-                                serverPlayer.playSoundToPlayer(RhapsodySounds.EVENT_CRASH, SoundCategory.MASTER, 1, 1);
-                                serverPlayer.playSoundToPlayer(RhapsodySounds.EVENT_GEO, SoundCategory.MASTER, 1, 1);
-                                serverPlayer.playSoundToPlayer(RhapsodySounds.EVENT_SHATTER, SoundCategory.MASTER, 1, 1);
+                                if (serverPlayer instanceof ScreenShaker shaker) {
+                                    shaker.addScreenShake(1, 45);
+                                }
                             }
                         }
                     }
-                } else {
-                    we.isActive = false;
-                    we.sync();
                 }
             }
         }

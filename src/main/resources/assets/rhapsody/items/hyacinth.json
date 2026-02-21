@@ -1,31 +1,57 @@
 {
   "model": {
-    "type": "select",
+    "type": "minecraft:select",
     "cases": [
       {
         "model": {
-          "type": "model",
-          "model": "rhapsody:item/hyacinth"
+          "type": "minecraft:select",
+          "cases": [
+            {
+              "model": {
+                "type": "minecraft:model",
+                "model": "rhapsody:item/hyacinth"
+              },
+              "when": [
+                "gui",
+                "ground",
+                "fixed"
+              ]
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:model",
+            "model": "rhapsody:item/hyacinth_handheld_fragmented"
+          },
+          "property": "minecraft:display_context"
         },
-        "when": [
-          "gui",
-          "ground",
-          "fixed"
-        ]
+        "when": true
+      },
+      {
+        "model": {
+          "type": "minecraft:select",
+          "cases": [
+            {
+              "model": {
+                "type": "minecraft:model",
+                "model": "rhapsody:item/hyacinth"
+              },
+              "when": [
+                "gui",
+                "ground",
+                "fixed"
+              ]
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:model",
+            "model": "rhapsody:item/hyacinth_handheld"
+          },
+          "property": "minecraft:display_context"
+        },
+        "when": false
       }
     ],
-    "fallback": {
-      "type": "minecraft:condition",
-      "property": "minecraft:using_item",
-      "on_true": {
-        "type": "minecraft:model",
-        "model": "rhapsody:item/hyacinth_blocking"
-      },
-      "on_false": {
-        "type": "minecraft:model",
-        "model": "rhapsody:item/hyacinth_handheld"
-      }
-    },
-    "property": "display_context"
+    "component": "rhapsody:is_fragmented",
+    "property": "minecraft:component"
   }
 }

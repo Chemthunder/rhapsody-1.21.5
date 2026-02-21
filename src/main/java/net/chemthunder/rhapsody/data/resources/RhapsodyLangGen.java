@@ -23,9 +23,9 @@ public class RhapsodyLangGen extends FabricLanguageProvider {
         // dmg
         registerDamageType(translationBuilder,
                 RhapsodyDamageTypes.EMBRACE,
-                "%1$s's soul was condemned",
-                "%1$s's soul was condemned",
-                "%1$s's soul was condemned"
+                "%1$s's went through hell and back",
+                "%1$s's went through hell and back thanks to %2$s wielding %3$s",
+                "%1$s's went to hell and back thanks to %2$s"
         );
 
         registerDamageType(translationBuilder,
@@ -44,6 +44,10 @@ public class RhapsodyLangGen extends FabricLanguageProvider {
 
         // misc
         translationBuilder.add("lore.hyacinth", "The God Butcher.");
+        translationBuilder.add("lore.hyacinth.fragmented.1", "LOOK TO THE SKIES");
+        translationBuilder.add("lore.hyacinth.fragmented.2", "YOU'LL SEE ME STARING BACK");
+        translationBuilder.add("lore.hyacinth.fragmented.3", "ALWAYS AND FOREVER");
+
         translationBuilder.add("text.hyacinth.backlash", "Your soul feels torn open.");
         translationBuilder.add("riftbreak.activate", "The skies rend in sorrows deep.");
     }

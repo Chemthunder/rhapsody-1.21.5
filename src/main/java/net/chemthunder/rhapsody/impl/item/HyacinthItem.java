@@ -7,6 +7,8 @@ import net.acoyt.acornlib.api.items.CustomKillSourceItem;
 import net.acoyt.acornlib.api.items.KillEffectItem;
 import net.acoyt.acornlib.api.util.ParticleUtils;
 import net.acoyt.acornlib.impl.client.particle.SweepParticleEffect;
+import net.chemthunder.lux.api.LuxFlashRenderer;
+import net.chemthunder.lux.impl.util.Easing;
 import net.chemthunder.rhapsody.impl.cca.entity.PlayerFlashComponent;
 import net.chemthunder.rhapsody.impl.cca.entity.SecondaryFlashComponent;
 import net.chemthunder.rhapsody.impl.cca.world.RiftbreakWorldEventComponent;
@@ -107,10 +109,12 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
             for (LivingEntity entity : entities) {
                 if (entity instanceof PlayerEntity player) {
                     if (player instanceof ScreenShaker shaker) {
-                        PlayerFlashComponent component = PlayerFlashComponent.KEY.get(player);
+//                        PlayerFlashComponent component = PlayerFlashComponent.KEY.get(player);
+//
+//                        component.flashTicks = 40;
+//                        component.sync();
 
-                        component.flashTicks = 40;
-                        component.sync();
+                        LuxFlashRenderer.sendFlash(player, 0xffffff, Easing.linear, 40);
 
                         player.playSoundToPlayer(RhapsodySounds.HYACINTH_EXECUTE, SoundCategory.PLAYERS, 1, 1);
                         player.playSoundToPlayer(SoundEvents.ENTITY_ALLAY_DEATH, SoundCategory.PLAYERS, 1, 0.1f);
@@ -256,10 +260,12 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
                                 if (serverPlayer instanceof ScreenShaker shaker) {
                                     shaker.addScreenShake(1, 70);
 
-                                    SecondaryFlashComponent flashComponent = SecondaryFlashComponent.KEY.get(serverPlayer);
+//                                    SecondaryFlashComponent flashComponent = SecondaryFlashComponent.KEY.get(serverPlayer);
+//
+//                                    flashComponent.flashTicks = 60;
+//                                    flashComponent.sync();
 
-                                    flashComponent.flashTicks = 60;
-                                    flashComponent.sync();
+                                    LuxFlashRenderer.sendFlash(serverPlayer, 0xff004c,   Easing.easeInOutExpo,130);
 
                                     serverPlayer.sendMessage(Text.translatable("riftbreak.activate").withColor(0xFFfc036b), true);
 
@@ -276,10 +282,11 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
                             stack.set(RhapsodyDataComponents.IS_FRAGMENTED, false);
 
                             for (ServerPlayerEntity serverPlayer : serverWorld.getPlayers()) {
-                                PlayerFlashComponent flashComponent = PlayerFlashComponent.KEY.get(serverPlayer);
-
-                                flashComponent.flashTicks = 40;
-                                flashComponent.sync();
+//                                PlayerFlashComponent flashComponent = PlayerFlashComponent.KEY.get(serverPlayer);
+//
+//                                flashComponent.flashTicks = 40;
+//                                flashComponent.sync();
+                                LuxFlashRenderer.sendFlash(serverPlayer, 0xffffff);
 
                                 serverPlayer.playSoundToPlayer(SoundEvents.BLOCK_BEACON_AMBIENT, SoundCategory.MASTER, 1, 1);
 

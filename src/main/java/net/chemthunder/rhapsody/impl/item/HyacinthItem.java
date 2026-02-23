@@ -7,8 +7,6 @@ import net.acoyt.acornlib.api.items.CustomKillSourceItem;
 import net.acoyt.acornlib.api.items.KillEffectItem;
 import net.acoyt.acornlib.api.util.ParticleUtils;
 import net.acoyt.acornlib.impl.client.particle.SweepParticleEffect;
-import net.chemthunder.lux.api.LuxFlashRenderer;
-import net.chemthunder.lux.impl.util.Easing;
 import net.chemthunder.rhapsody.impl.cca.entity.PlayerFlashComponent;
 import net.chemthunder.rhapsody.impl.cca.entity.SecondaryFlashComponent;
 import net.chemthunder.rhapsody.impl.cca.world.RiftbreakWorldEventComponent;
@@ -262,8 +260,6 @@ public class HyacinthItem extends Item implements CustomHitParticleItem, KillEff
 
                                     flashComponent.flashTicks = 60;
                                     flashComponent.sync();
-
-                                    LuxFlashRenderer.sendFlash(serverPlayer, 0xff004c,   Easing.easeInOutExpo,130);
 
                                     serverPlayer.sendMessage(Text.translatable("riftbreak.activate").withColor(0xFFfc036b), true);
 

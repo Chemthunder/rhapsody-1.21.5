@@ -1,5 +1,6 @@
 package net.chemthunder.rhapsody.mixin.client;
 
+import net.chemthunder.rhapsody.compat.RhapConfig;
 import net.chemthunder.rhapsody.impl.Rhapsody;
 import net.chemthunder.rhapsody.impl.cca.entity.PlayerFlashComponent;
 import net.chemthunder.rhapsody.impl.cca.entity.SecondaryFlashComponent;
@@ -48,7 +49,7 @@ public abstract class InGameHudMixin {
 
 
             if (RiftbreakWorldEventComponent.KEY.get(player.getWorld()).isActive) {
-                this.renderOverlay(context, SILLY_VIGNETTE, 0.5f);
+                this.renderOverlay(context, SILLY_VIGNETTE, RhapConfig.overlayOpacity);
             }
         }
     }

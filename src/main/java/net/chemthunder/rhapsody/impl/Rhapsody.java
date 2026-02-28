@@ -1,6 +1,8 @@
 package net.chemthunder.rhapsody.impl;
 
+import eu.midnightdust.lib.config.MidnightConfig;
 import net.acoyt.acornlib.api.ALib;
+import net.chemthunder.rhapsody.compat.RhapConfig;
 import net.chemthunder.rhapsody.impl.index.RhapsodyDataComponents;
 import net.chemthunder.rhapsody.impl.index.RhapsodyItems;
 import net.chemthunder.rhapsody.impl.index.RhapsodyParticles;
@@ -23,6 +25,7 @@ public class Rhapsody implements ModInitializer {
         RhapsodyParticles.init();
 
         ALib.registerModMenu(MOD_ID, 0xFF941957);
+        MidnightConfig.init(MOD_ID, RhapConfig.class);
 
 		LOGGER.info("Hello Fabric world!");
 	}

@@ -18,6 +18,7 @@
     "client.ItemModelManagerMixin",
     "client.PlayerEntityRendererMixin",
     "client.riftbreak.ClientWorldMixin",
+    "client.riftbreak.CloudRendererMixin",
     "client.riftbreak.DimensionEffectsMixin",
     "client.riftbreak.SkyRenderingMixin",
     "client.riftbreak.WeatherRenderingMixin",

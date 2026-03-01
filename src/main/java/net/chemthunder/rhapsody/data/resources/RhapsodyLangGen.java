@@ -57,6 +57,7 @@ public class RhapsodyLangGen extends FabricLanguageProvider {
         translationBuilder.add("rhapsody.midnightconfig.changeFogColor", "Should change fog color");
         translationBuilder.add("rhapsody.midnightconfig.changeStarColor", "Should change the color of the stars");
         translationBuilder.add("rhapsody.midnightconfig.overlayOpacity", "Opacity of Riftbreak vignette");
+        translationBuilder.add("rhapsody.midnightconfig.changeCloudColor", "Should change the color of clouds");
     }
 
     public void registerDamageType(TranslationBuilder builder, RegistryKey<DamageType> registryKey, String normal, String item, String player) {

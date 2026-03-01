@@ -16,4 +16,7 @@ public class RhapConfig extends MidnightConfig {
 
     @Entry(category = config)
     public static boolean changeFogColor = true;
+
+    @Entry(category = config)
+    public static boolean changeCloudColor = true;
 }

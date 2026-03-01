@@ -50,6 +50,13 @@ public class RhapsodyLangGen extends FabricLanguageProvider {
 
         translationBuilder.add("text.hyacinth.backlash", "Your soul feels torn open.");
         translationBuilder.add("riftbreak.activate", "The skies rend in sorrows deep.");
+
+        // midnight
+        translationBuilder.add("rhapsody.midnightconfig.title", "Riftbreak Visuals");
+        translationBuilder.add("rhapsody.midnightconfig.changeSkyColor", "Should change sky color");
+        translationBuilder.add("rhapsody.midnightconfig.changeFogColor", "Should change fog color");
+        translationBuilder.add("rhapsody.midnightconfig.changeStarColor", "Should change the color of the stars");
+        translationBuilder.add("rhapsody.midnightconfig.overlayOpacity", "Opacity of Riftbreak vignette");
     }
 
     public void registerDamageType(TranslationBuilder builder, RegistryKey<DamageType> registryKey, String normal, String item, String player) {

@@ -1,6 +1,7 @@
 package net.chemthunder.rhapsody.mixin.client.riftbreak;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.chemthunder.rhapsody.compat.RhapConfig;
 import net.chemthunder.rhapsody.impl.cca.world.RiftbreakWorldEventComponent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
@@ -15,8 +16,10 @@ public abstract class ClientWorldMixin {
         ClientWorld world = MinecraftClient.getInstance().world;
 
         if (world != null) {
-            if (RiftbreakWorldEventComponent.KEY.get(world).isActive) {
-                return 0x5e1a2f;
+            if (RhapConfig.changeSkyColor) {
+                if (RiftbreakWorldEventComponent.KEY.get(world).isActive) {
+                    return 0x5e1a2f;
+                }
             }
         }
 

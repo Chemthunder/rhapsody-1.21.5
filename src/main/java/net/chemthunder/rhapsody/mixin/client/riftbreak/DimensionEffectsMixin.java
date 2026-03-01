@@ -1,5 +1,6 @@
 package net.chemthunder.rhapsody.mixin.client.riftbreak;
 
+import net.chemthunder.rhapsody.compat.RhapConfig;
 import net.chemthunder.rhapsody.impl.cca.world.RiftbreakWorldEventComponent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.DimensionEffects;
@@ -18,7 +19,9 @@ public abstract class DimensionEffectsMixin {
         ClientWorld world = MinecraftClient.getInstance().world;
 
         if (world != null && RiftbreakWorldEventComponent.KEY.get(world).isActive) {
-            cir.setReturnValue(Vec3d.ZERO);
+            if (RhapConfig.changeFogColor) {
+                cir.setReturnValue(Vec3d.ZERO);
+            }
         }
     }
 }

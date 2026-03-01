@@ -7,4 +7,13 @@ public class RhapConfig extends MidnightConfig {
 
     @Entry(category = config)
     public static float overlayOpacity = 0.3f;
+
+    @Entry(category = config)
+    public static boolean changeSkyColor = true;
+
+    @Entry(category = config)
+    public static boolean changeStarColor = true;
+
+    @Entry(category = config)
+    public static boolean changeFogColor = true;
 }

@@ -2,12 +2,14 @@ package net.chemthunder.rhapsody.mixin.client.riftbreak;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.chemthunder.rhapsody.compat.RhapConfig;
 import net.chemthunder.rhapsody.impl.cca.world.RiftbreakWorldEventComponent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.SkyRendering;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.util.math.ColorHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -39,10 +41,12 @@ public abstract class SkyRenderingMixin {
         ClientWorld clientWorld = MinecraftClient.getInstance().world;
 
         if (clientWorld != null) {
-            if (RiftbreakWorldEventComponent.KEY.get(clientWorld).isActive) {
-                original.call(255f, 0f, 0f, alpha);
-            } else {
-                original.call(red, green, blue, alpha);
+            if (RhapConfig.changeStarColor) {
+                if (RiftbreakWorldEventComponent.KEY.get(clientWorld).isActive) {
+                    original.call(255f, 0f, 0f, alpha);
+                } else {
+                    original.call(red, green, blue, alpha);
+                }
             }
         }
     }

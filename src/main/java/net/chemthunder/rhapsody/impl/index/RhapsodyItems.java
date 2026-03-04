@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -28,6 +29,10 @@ public interface RhapsodyItems {
     }
 
     private static void addCombatEntries(FabricItemGroupEntries entries) {
+        ItemStack secondHya = new ItemStack(HYACINTH);
+        secondHya.set(RhapsodyDataComponents.IS_FRAGMENTED, true);
+
         entries.addAfter(Items.CROSSBOW, HYACINTH);
+        entries.addAfter(HYACINTH, secondHya);
     }
 }
